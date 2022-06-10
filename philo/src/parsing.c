@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:54:09 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/06/10 20:47:45 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/06/10 23:59:18 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static void	verif_nb(int ac, char **av)
 		x = 0;
 		while (av[y][x])
 		{
-			ft_printf("%c \n",av[y][x]);
 			if (av[y][x] < '0' || av[y][x] > '9')
 				error();
 			x++;

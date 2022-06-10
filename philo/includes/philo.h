@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:55:58 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/06/10 19:37:53 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/06/10 23:19:19 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <pthread.h>
 # include <limits.h>
 # include "../ft_printf/ft_printf.h"
+# include <time.h>
+# include <sys/time.h>
 
 typedef struct s_init
 {
