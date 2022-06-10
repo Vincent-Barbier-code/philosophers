@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:59:31 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/06/10 17:57:30 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:43:16 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int ac, char **av)
 	t_init	init;
 
 	parsing(ac, av, &init);
+
 	ft_printf("%d ", init.nb_philo);
 	ft_printf("%d ", init.time_to_die);
 	ft_printf("%d ", init.time_to_eat);
