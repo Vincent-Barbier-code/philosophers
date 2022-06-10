@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:54:09 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/06/10 18:42:59 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/06/10 20:47:45 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ static void	verif_nb(int ac, char **av)
 	y = 1;		
 	while (y < ac - 1)
 	{
+		x = 0;
 		while (av[y][x])
 		{
+			ft_printf("%c \n",av[y][x]);
 			if (av[y][x] < '0' || av[y][x] > '9')
 				error();
 			x++;
@@ -64,12 +66,13 @@ static void	verif_nb(int ac, char **av)
 
 void	parsing(int ac, char **av, t_init *init)
 {
-	if (ac != 5)
+	if (ac != 6)
 		error();
 	verif_nb(ac, av);
 	init->nb_philo = ft_atoi(av[1]);
 	init->time_to_die = ft_atoi(av[2]);
 	init->time_to_eat = ft_atoi(av[3]);
 	init->time_to_sleep = ft_atoi(av[4]);
+	init->nb_must_eat = ft_atoi(av[5]);
 
 }

@@ -1,5 +1,5 @@
 NAME = philo
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 DEPS = $(INCLUDES)philo.h Makefile
 INCLUDES = includes/
 SRC_DIR = src/
