@@ -14,14 +14,17 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	gcc $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ) $(DEPS)
+	$(MAKE) -C ft_printf/
 	gcc $(CFLAGS) $(OBJ) $(FT_PRINTF) -lpthread -D_REENTRANT -o $(NAME)
 
 all : $(NAME)
 
 clean :
+	$(MAKE) clean -C ft_printf/
 	rm -rf $(OBJ_DIR)
 
 fclean : clean
+	$(MAKE) fclean -C ft_printf/
 	rm -f $(NAME)
 
 re : fclean all

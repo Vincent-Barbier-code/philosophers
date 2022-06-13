@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:59:31 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/06/11 00:34:23 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:36:59 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,22 @@
 
 //int pthread_create (pthread_t * thread, pthread_attr_t * attr, void * (* start_routine) (void *), void * arg);
 
-unsigned long long int x = 0;
+int x[10] = {1, 2, 3, 4, 5, 6 ,7, 8, 9, 10};
 pthread_mutex_t	mutex;
 
 static void *philosophe(void *i)
 {
+	usleep(900);
+	//sleep(3);
+	pthread_mutex_lock(&mutex);
+	int a = *(int *) i;
 	
-	int a;
-
-	a = 0;
-	while (a < 1)
-	{
-		pthread_mutex_lock(&mutex);
-		x++;
-		a++;
-		pthread_mutex_unlock(&mutex);
-	}
 	
+	printf("%d \n",a);
+	pthread_mutex_unlock(&mutex);
+		// 
+		// x++;
+		// 
 //	x++;
 //	ft_printf("x = %d\n", x);
 	return NULL;
@@ -54,8 +53,8 @@ void	create_philo(t_init *init)
 		{
 			ret = pthread_create(&philo[i], NULL, philosophe, &i);
 			if (ret)
-				ft_printf("OULA1");
-			ft_printf("Philo %d !\n", i);
+				ft_printf("Probleme crea thread");
+			//ft_printf("Philo %d !\n", i + 1);
 			i++;
 		}
 		i = 0;
@@ -63,8 +62,8 @@ void	create_philo(t_init *init)
 		{
 			ret = pthread_join(philo[i], NULL);
 			if (ret)
-				ft_printf("OULA2");
-			ft_printf("Philo %d est mort !\n", i);
+				ft_printf("Probleme join thread");
+			//	ft_printf("Philo %d est mort !\n", i + 1);
 			i++;
 		}
 	}
