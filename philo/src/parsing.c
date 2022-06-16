@@ -50,7 +50,7 @@ static void	verif_nb(int ac, char **av)
 
 	x = 0;
 	y = 1;		
-	while (y < ac - 1)
+	while (y < ac)
 	{
 		x = 0;
 		while (av[y][x])
@@ -65,13 +65,15 @@ static void	verif_nb(int ac, char **av)
 
 void	parsing(int ac, char **av, t_init *init)
 {
-	if (ac != 6)
+	init->nb_must_eat = 0;
+	if (ac > 6 || ac < 5)
 		error();
 	verif_nb(ac, av);
 	init->nb_philo = ft_atoi(av[1]);
 	init->time_to_die = ft_atoi(av[2]);
 	init->time_to_eat = ft_atoi(av[3]);
 	init->time_to_sleep = ft_atoi(av[4]);
-	init->nb_must_eat = ft_atoi(av[5]);
+	if (ac == 6)
+		init->nb_must_eat = ft_atoi(av[5]);
 
 }
