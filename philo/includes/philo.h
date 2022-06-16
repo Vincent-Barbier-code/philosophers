@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:55:58 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/06/10 23:19:19 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/06/16 18:09:31 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,16 @@ typedef struct s_init
 	int	time_to_sleep;
 	int	nb_must_eat;
 }	t_init;
-/*
+
 typedef struct s_philo
 {
-	int			*fork1;
-	int			*fork2;
+	int			*forkD;
+	int			*forkG;
 	pthread_t	thread_philo [NB_CLIENTS];
+	t_init		init;
+
 }	t_philo;
-*/
+
 //parsing.c
 void	parsing(int ac, char **av, t_init *init);
 

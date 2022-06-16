@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:59:31 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/06/11 17:36:59 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:50:56 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,17 @@
 
 //int pthread_create (pthread_t * thread, pthread_attr_t * attr, void * (* start_routine) (void *), void * arg);
 
-int x[10] = {1, 2, 3, 4, 5, 6 ,7, 8, 9, 10};
 pthread_mutex_t	mutex;
 
-static void *philosophe(void *i)
+void	*philosophe(void *i)
 {
 	usleep(900);
 	//sleep(3);
-	pthread_mutex_lock(&mutex);
+
 	int a = *(int *) i;
-	
-	
 	printf("%d \n",a);
-	pthread_mutex_unlock(&mutex);
-		// 
-		// x++;
-		// 
-//	x++;
-//	ft_printf("x = %d\n", x);
 	return NULL;
 }
-
 
 void	create_philo(t_init *init)
 {
@@ -43,19 +33,23 @@ void	create_philo(t_init *init)
 	int	ret;
 	int	i;
 
+	pthread_mutex_init(&mutex, NULL);
+	pthread_mutex_lock(&mutex);
 	i = 0;
 	ret = 0;
-	pthread_mutex_init(&mutex, NULL); 
+	
 	if (!ret)
 	{
 		printf ("Creation des threads clients !\n");
 		while(i < init->nb_philo)
 		{
+			
 			ret = pthread_create(&philo[i], NULL, philosophe, &i);
 			if (ret)
 				ft_printf("Probleme crea thread");
 			//ft_printf("Philo %d !\n", i + 1);
 			i++;
+			pthread_mutex_unlock(&mutex);
 		}
 		i = 0;
 		while (i < init->nb_philo)
@@ -96,16 +90,18 @@ int	main(int ac, char **av)
 	//loopFunc(1000000);
 	parsing(ac, av, &init);
 	create_philo(&init);
+	//join_philo()
 
 	gettimeofday(&end, NULL);
 	
-    printf("time spent: %0.4f ms\n", time_diff(&start, &end)* 1e3);
+    printf("timestamp_in_ms: %0.4f ms\n", time_diff(&start, &end)* 1e3);
 
 	ft_printf("%d ", init.nb_philo);
 	ft_printf("%d ", init.time_to_die);
 	ft_printf("%d ", init.time_to_eat);
 	ft_printf("%d ", init.time_to_sleep);
-	ft_printf("%d ", init.nb_must_eat);
+	if (init.nb_must_eat != 0)
+		ft_printf("%d ", init.nb_must_eat);
 	
 	ft_printf("\n--------------------------FINIS-------------------------");
 	exit(EXIT_SUCCESS);
