@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:55:58 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/06/16 18:09:31 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/03 02:28:31 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <time.h>
 # include <sys/time.h>
 
+# define MIAM 0
+# define PENSE 1
+# define DORT 2
+
 typedef struct s_init
 {
 	int	nb_philo;
@@ -26,14 +30,20 @@ typedef struct s_init
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	nb_must_eat;
+	pthread_mutex_t		*mutex;
 }	t_init;
 
 typedef struct s_philo
 {
-	int			*forkD;
-	int			*forkG;
-	pthread_t	thread_philo [NB_CLIENTS];
-	t_init		init;
+	int					ID;
+	int					state;
+	int					*fork;
+	pthread_t			thread;
+	unsigned long int	time_to_die;
+	unsigned long int	time_to_eat;
+	unsigned long int	time_to_sleep;
+	int					nb_must_eat;
+	t_init	init;
 
 }	t_philo;
 
