@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:55:58 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/03 02:28:31 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:49:14 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,38 @@
 
 typedef struct s_init
 {
-	int	nb_philo;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	nb_must_eat;
-	pthread_mutex_t		*mutex;
+	int					nb_philo;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					nb_must_eat;
+	unsigned long int	time;
+	pthread_mutex_t		*fork;
 }	t_init;
 
 typedef struct s_philo
 {
 	int					ID;
 	int					state;
-	int					*fork;
+	int					rfork;
+	int					lfork;
 	pthread_t			thread;
 	unsigned long int	time_to_die;
 	unsigned long int	time_to_eat;
 	unsigned long int	time_to_sleep;
 	int					nb_must_eat;
-	t_init	init;
+	t_init				init;
 
 }	t_philo;
 
 //parsing.c
 void	parsing(int ac, char **av, t_init *init);
 
+//fork.c
+pthread_mutex_t	*init_fork(t_init *init);
+void	destroy_fork(t_init *init);
+unsigned long int	get_time(void);
+
+//action.c
+void	*action(t_philo *philo);
 #endif

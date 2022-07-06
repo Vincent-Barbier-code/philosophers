@@ -1,12 +1,12 @@
 NAME = philo
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 DEPS = $(INCLUDES)philo.h Makefile
 INCLUDES = includes/
 SRC_DIR = src/
 OBJ_DIR = obj/
 FT_PRINTF =  -L ./ft_printf -lftprintf
 
-SRC_FILES = $(addprefix $(SRC_DIR), main.c parsing.c)
+SRC_FILES = $(addprefix $(SRC_DIR), main.c parsing.c fork.c action.c)
 OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c

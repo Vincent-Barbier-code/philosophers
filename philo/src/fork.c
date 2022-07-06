@@ -6,23 +6,43 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 23:20:06 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/03 00:55:53 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:13:49 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	*init_fork(t_philo philo)
+pthread_mutex_t	*init_fork(t_init *init)
 {
-	int *fork;
+	pthread_mutex_t	*fork;
 	int i;
 
-	fork = malloc(philo.init.nb_philo * sizeof(int));
+	fork = malloc(init->nb_philo * sizeof(pthread_mutex_t));
 	i = 0;
-	while (i < philo.init.nb_philo)
+	while (i < init->nb_philo)
 	{
-		fork[i] = 1;
+		pthread_mutex_init(&fork[i], NULL);
 		i++;
 	}
 	return (fork);
+}
+
+void	destroy_fork(t_init *init)
+{
+	int i;
+
+	i = 0;
+	while (i < init->nb_philo)
+	{
+		pthread_mutex_destroy(&init->fork[i]);
+		i++;
+	}
+}
+
+unsigned long int	get_time(void)
+{
+    struct timeval	tv;
+
+    gettimeofday(&tv, NULL);
+    return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }

@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:54:09 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/06/10 23:59:18 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:52:27 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ void	parsing(int ac, char **av, t_init *init)
 	init->time_to_sleep = ft_atoi(av[4]);
 	if (ac == 6)
 		init->nb_must_eat = ft_atoi(av[5]);
-
+	else
+		init->nb_must_eat = 0;
 }
