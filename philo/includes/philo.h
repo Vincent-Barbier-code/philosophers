@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:55:58 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/07 14:05:47 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/07 23:17:00 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ typedef struct s_init
 	unsigned long int	time;
 	int					die;
 	pthread_mutex_t		*fork;
-	pthread_t			monitor;
+	pthread_t			monitor_time_die;
+	pthread_t			monitor_nb_eat;
+	int					monitor_end;
 }	t_init;
 
 typedef struct s_philo
@@ -64,8 +66,8 @@ unsigned long int	get_time(void);
 void	*action(t_philo *philo);
 
 //monitoring.c 
-pthread_t	create_monitor(t_philo *philo);
-int	join_monitor(pthread_t monitor);
+t_philo	*create_monitor(t_philo *philo);
+int	join_monitor(t_philo *philo);
 
 
 #endif

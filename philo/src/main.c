@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:59:31 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/07 14:04:09 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/08 00:38:55 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ t_philo *init_philo(t_philo *philo, t_init init, int i)
 		philo[i].rfork = 0;
 	else
 		philo[i].rfork = i + 1;
-	if (init.nb_must_eat != 0)
-		philo[i].nb_must_eat = philo->init.nb_must_eat;
-	else
-		philo[i].nb_must_eat = -1;
+	philo[i].nb_must_eat = philo->init.nb_must_eat;
 	return (philo);
 }
 
@@ -68,7 +65,7 @@ t_philo	*create_philo(t_philo *philo, t_init *init)
 	i = 0;
 	init->fork = init_fork(init);
 	init->time = get_time();
-	printf ("Creation des threads clients !\n");
+	//printf ("Creation des threads clients !\n");
 	while(i < init->nb_philo)
 	{
 		philo = init_philo(philo, *init, i);
@@ -80,7 +77,7 @@ t_philo	*create_philo(t_philo *philo, t_init *init)
 		}
 		i++;
 	}
-	philo->init.monitor = create_monitor(philo);
+	philo = create_monitor(philo);
 	return (philo);
 }
 
@@ -96,7 +93,7 @@ int	main(int ac, char **av)
 	 // free le tab
 	if (join_philo(philo, &init))
 		return (EXIT_FAILURE); // free le tab
-	if (join_monitor(philo->init.monitor))
+	if (join_monitor(philo))
 		return (EXIT_FAILURE);
 	destroy_fork(&init);
 	free(philo->init.fork);
