@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:07:32 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/07 06:48:45 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:06:37 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	*monitoring(void *a)
 	}
 }
 
-void	create_monitor(t_philo *philo)
+pthread_t	create_monitor(t_philo *philo)
 {
 	int			ret;
 	pthread_t	monitor;
@@ -62,4 +62,18 @@ void	create_monitor(t_philo *philo)
 		ft_printf("Probleme crea monitoring");
 		//return (i);
 	}
+	return (monitor);
+}
+
+int	join_monitor(pthread_t monitor)
+{
+	int			ret;
+	
+	ret = pthread_join(monitor , NULL);
+	if (ret)
+	{
+		ft_printf("Probleme join thread");
+		return (1);
+	}
+	return (0);
 }

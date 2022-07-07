@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 00:34:28 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/07 06:50:25 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/07 13:47:39 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	*action(t_philo *philo)
 		{
 			printf("%ld %d is sleeping \n", get_time() - philo->init.time, philo->ID);
 			usleep(philo->init.time_to_sleep * 1000);
-			if(!(philo->init.die == DIE))
-			{
+			//if(!(philo->init.die == DIE))
+			//{
 				printf("%ld %d is thinking \n", get_time() - philo->init.time, philo->ID);
 				philo->state = PENSE;
-			}
+			//}
 		}
 	}
 }

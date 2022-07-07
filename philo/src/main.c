@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:59:31 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/07 06:07:03 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:04:09 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_philo	*create_philo(t_philo *philo, t_init *init)
 		}
 		i++;
 	}
-	create_monitor(philo);
+	philo->init.monitor = create_monitor(philo);
 	return (philo);
 }
 
@@ -96,7 +96,11 @@ int	main(int ac, char **av)
 	 // free le tab
 	if (join_philo(philo, &init))
 		return (EXIT_FAILURE); // free le tab
+	if (join_monitor(philo->init.monitor))
+		return (EXIT_FAILURE);
 	destroy_fork(&init);
+	free(philo->init.fork);
+	free(philo);
 
 	ft_printf("%d ", init.nb_philo);
 	ft_printf("%d ", init.time_to_die);
