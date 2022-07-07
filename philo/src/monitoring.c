@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:07:32 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/08 00:40:41 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/08 01:19:52 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	*monitoring_eat(void *a)
 	{
 		while (i < philo->init.nb_philo)
 		{
-			//if (philo[i].init.die = DIE)
-
 			pthread_mutex_lock(&mutex);
 			if (philo[i].nb_must_eat != 0)
 			{
@@ -84,7 +82,7 @@ void	*monitoring_die(void *a)
 			}
 			i++;
 			pthread_mutex_unlock(&mutex);
-			//usleep(1000);
+			usleep(100);
 		}
 		i = 0;
 		//cmp = 0;
