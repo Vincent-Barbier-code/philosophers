@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:59:31 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/07 01:04:21 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/07 06:07:03 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ void	*routine(void *a)
 	return (NULL);
 }
 
-t_philo init_philo(t_philo *philo, t_init init, int i)
+t_philo *init_philo(t_philo *philo, t_init init, int i)
 {
-	philo[i].ID = i;
+	philo[i].ID = i + 1;
 	philo[i].state = -1;
 	philo[i].init = init;
+	philo[i].init.die = 0;
+	philo[i].time_to_die = get_time() + philo->init.time_to_die;
 	philo[i].lfork = i;
 	if (i == philo->init.nb_philo - 1)
 		philo[i].rfork = 0;
@@ -54,7 +56,7 @@ t_philo init_philo(t_philo *philo, t_init init, int i)
 		philo[i].nb_must_eat = philo->init.nb_must_eat;
 	else
 		philo[i].nb_must_eat = -1;
-	return (philo[i]);
+	return (philo);
 }
 
 t_philo	*create_philo(t_philo *philo, t_init *init)
@@ -69,7 +71,7 @@ t_philo	*create_philo(t_philo *philo, t_init *init)
 	printf ("Creation des threads clients !\n");
 	while(i < init->nb_philo)
 	{
-		philo[i] = init_philo(philo, *init, i);
+		philo = init_philo(philo, *init, i);
 		ret = pthread_create(&philo[i].thread, NULL, &routine, &philo[i]);
 		if (ret)
 		{
@@ -78,6 +80,7 @@ t_philo	*create_philo(t_philo *philo, t_init *init)
 		}
 		i++;
 	}
+	create_monitor(philo);
 	return (philo);
 }
 
@@ -89,6 +92,7 @@ int	main(int ac, char **av)
 	parsing(ac, av, &init);
 	philo = NULL;
 	philo = create_philo(philo, &init);
+	
 	 // free le tab
 	if (join_philo(philo, &init))
 		return (EXIT_FAILURE); // free le tab

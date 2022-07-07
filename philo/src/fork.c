@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 23:20:06 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/07 00:13:49 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/07 01:24:33 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@ pthread_mutex_t	*init_fork(t_init *init)
 {
 	pthread_mutex_t	*fork;
 	int i;
+	int ret;
 
 	fork = malloc(init->nb_philo * sizeof(pthread_mutex_t));
 	i = 0;
 	while (i < init->nb_philo)
 	{
-		pthread_mutex_init(&fork[i], NULL);
+		ret = pthread_mutex_init(&fork[i], NULL);
+		if (ret)
+			return (NULL);
 		i++;
 	}
 	return (fork);

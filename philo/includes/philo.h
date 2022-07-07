@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:55:58 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/07 00:49:14 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/07 05:01:04 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define MIAM 0
 # define PENSE 1
 # define DORT 2
+# define DIE 3
 
 typedef struct s_init
 {
@@ -31,6 +32,7 @@ typedef struct s_init
 	int					time_to_sleep;
 	int					nb_must_eat;
 	unsigned long int	time;
+	int					die;
 	pthread_mutex_t		*fork;
 }	t_init;
 
@@ -59,4 +61,8 @@ unsigned long int	get_time(void);
 
 //action.c
 void	*action(t_philo *philo);
+
+//monitoring.c 
+void	create_monitor(t_philo *philo);
+
 #endif
