@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:59:31 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/08 00:38:55 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/08 01:47:50 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_philo	*create_philo(t_philo *philo, t_init *init)
 	i = 0;
 	init->fork = init_fork(init);
 	init->time = get_time();
-	//printf ("Creation des threads clients !\n");
+	pthread_mutex_init(&philo->init.read, NULL);
 	while(i < init->nb_philo)
 	{
 		philo = init_philo(philo, *init, i);

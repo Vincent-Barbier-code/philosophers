@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:55:58 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/07 23:17:00 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/08 01:46:59 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ typedef struct s_init
 	int					die;
 	pthread_mutex_t		*fork;
 	pthread_t			monitor_time_die;
-	pthread_t			monitor_nb_eat;
-	int					monitor_end;
+	pthread_mutex_t		read;
 }	t_init;
 
 typedef struct s_philo

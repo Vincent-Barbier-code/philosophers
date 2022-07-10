@@ -6,63 +6,61 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:07:32 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/08 01:19:52 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/08 01:53:27 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
 
-void	*monitoring_eat(void *a)
-{
-	t_philo			*philo;
-	pthread_mutex_t	mutex;
-	int				i;
-	int cmp;
+// void	*monitoring_eat(void *a)
+// {
+// 	t_philo			*philo;
+// 	pthread_mutex_t	mutex;
+// 	int				i;
+// 	int cmp;
 
-	cmp = 0;
-	i = 0;
-	philo = a;
-	pthread_mutex_init(&mutex, NULL);
-	while (1)
-	{
-		while (i < philo->init.nb_philo)
-		{
-			pthread_mutex_lock(&mutex);
-			if (philo[i].nb_must_eat != 0)
-			{
-				cmp++;
-				i++;
-				if (cmp == philo->init.nb_philo)
-				{
-					philo[i].init.die = DIE;
-					return (NULL);
-				}
-			}
-			i++;
-			pthread_mutex_unlock(&mutex);
-			usleep(1000);
-		}
-		i = 0;
-	}
-}
+// 	cmp = 0;
+// 	i = 0;
+// 	philo = a;
+// 	pthread_mutex_init(&mutex, NULL);
+// 	while (1)
+// 	{
+// 		while (i < philo->init.nb_philo)
+// 		{
+// 			pthread_mutex_lock(&mutex);
+// 			if (philo[i].nb_must_eat != 0)
+// 			{
+// 				cmp++;
+// 				i++;
+// 				if (cmp == philo->init.nb_philo)
+// 				{
+// 					philo[i].init.die = DIE;
+// 					return (NULL);
+// 				}
+// 			}
+// 			i++;
+// 			pthread_mutex_unlock(&mutex);
+// 			usleep(100);
+// 		}
+// 		i = 0;
+// 	}
+// }
 
 void	*monitoring_die(void *a)
 {
 	t_philo			*philo;
-	pthread_mutex_t	mutex;
 	int				i;
 	int cmp;
 
 	cmp = 0;
 	i = 0;
 	philo = a;
-	pthread_mutex_init(&mutex, NULL);
 	while (1)
 	{
 		while (i < philo->init.nb_philo)
 		{
-			pthread_mutex_lock(&mutex);
+			pthread_mutex_lock(&philo->init.read);
 			if (philo[i].nb_must_eat == 0)
 			{
 				cmp++;
@@ -81,7 +79,7 @@ void	*monitoring_die(void *a)
 				return (NULL);
 			}
 			i++;
-			pthread_mutex_unlock(&mutex);
+			pthread_mutex_unlock(&philo->init.read);
 			usleep(100);
 		}
 		i = 0;

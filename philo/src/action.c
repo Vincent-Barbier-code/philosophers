@@ -6,11 +6,25 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 00:34:28 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/08 00:58:40 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/08 02:25:21 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void	p_read(t_philo *philo, int what)
+{
+	pthread_mutex_lock(&philo->init.read);
+	if (what == 0)
+		printf("%ld %d has taken a fork \n", get_time() - philo->init.time, philo->ID);
+	if (what == 1)
+		printf("%ld %d is eating \n", get_time() - philo->init.time, philo->ID);
+	if (what == 2)
+		printf("%ld %d is sleeping \n", get_time() - philo->init.time, philo->ID);
+	if (what == 3)
+		printf("%ld %d is thinking \n", get_time() - philo->init.time, philo->ID);
+	pthread_mutex_unlock(&philo->init.read);
+}
 
 void	eat(t_philo *philo)
 {
@@ -19,7 +33,7 @@ void	eat(t_philo *philo)
 		pthread_mutex_unlock(&philo->init.fork[philo->lfork]);
 	else
 	{
-		printf("%ld %d has taken a fork \n", get_time() - philo->init.time, philo->ID);
+		p_read(philo, 0);
 		pthread_mutex_lock(&philo->init.fork[philo->rfork]);
 		if (philo->init.die == DIE)
 		{
@@ -27,10 +41,10 @@ void	eat(t_philo *philo)
 			pthread_mutex_unlock(&philo->init.fork[philo->rfork]);
 			return ;
 		}	
-		printf("%ld %d has taken a fork \n", get_time() - philo->init.time, philo->ID);
+		p_read(philo, 0);		
 		philo->nb_must_eat = philo->nb_must_eat - 1;
 		philo->time_to_die = get_time() + philo->init.time_to_die;
-		printf("%ld %d is eating \n", get_time() - philo->init.time, philo->ID);
+		p_read(philo, 1);
 		usleep(philo->init.time_to_eat * 1000);
 		philo->state = DORT;
 		pthread_mutex_unlock(&philo->init.fork[philo->lfork]);
@@ -41,7 +55,7 @@ void	eat(t_philo *philo)
 void	*action(t_philo *philo)
 {
 	while (1)
-	{
+	{	
 		if (philo->init.die == DIE)
 			return (NULL);
 		if (philo->nb_must_eat == 0)
@@ -54,10 +68,15 @@ void	*action(t_philo *philo)
 			eat(philo);
 		if (philo->state == DORT && !(philo->init.die == DIE) && !(philo->nb_must_eat == 0))
 		{
-			printf("%ld %d is sleeping \n", get_time() - philo->init.time, philo->ID);
+			p_read(philo, 2);
+			if (philo->init.die == DIE)
+				return (NULL);
 			usleep(philo->init.time_to_sleep * 1000);
-			printf("%ld %d is thinking \n", get_time() - philo->init.time, philo->ID);
+			if (philo->init.die == DIE)
+				return (NULL);
+			p_read(philo, 3);
 				philo->state = PENSE;
+			
 		}
 	}
 }
