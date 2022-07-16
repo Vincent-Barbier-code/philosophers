@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:59:31 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/08 01:47:50 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/16 20:21:06 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ void	*routine(void *a)
 {
 	t_philo *philo;
 
+	// usleep(100);
 	philo = a;
-	action(philo);
+	action(philo);	
 	return (NULL);
 }
 
@@ -65,7 +66,10 @@ t_philo	*create_philo(t_philo *philo, t_init *init)
 	i = 0;
 	init->fork = init_fork(init);
 	init->time = get_time();
-	pthread_mutex_init(&philo->init.read, NULL);
+	pthread_mutex_init(&init->read, NULL);
+	pthread_mutex_init(&init->pense, NULL);
+	pthread_mutex_init(&init->m_die, NULL);
+	pthread_mutex_init(&init->m_nb_eat, NULL);
 	while(i < init->nb_philo)
 	{
 		philo = init_philo(philo, *init, i);
@@ -73,6 +77,7 @@ t_philo	*create_philo(t_philo *philo, t_init *init)
 		if (ret)
 		{
 			ft_printf("Probleme crea thread");
+			exit(0);
 			//return (i);
 		}
 		i++;
