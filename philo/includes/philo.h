@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:55:58 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/16 20:22:20 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/17 22:38:16 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ typedef struct s_init
 	int					die;
 	pthread_mutex_t		*fork;
 	pthread_t			monitor_time_die;
-	pthread_mutex_t		read;
-	pthread_mutex_t		pense;
+	pthread_mutex_t		m_read;
 	pthread_mutex_t		m_die;
 	pthread_mutex_t		m_nb_eat;
+	pthread_mutex_t		m_state;
+
 }	t_init;
 
 typedef struct s_philo
@@ -52,7 +53,7 @@ typedef struct s_philo
 	unsigned long int	time_to_eat;
 	unsigned long int	time_to_sleep;
 	int					nb_must_eat;
-	t_init				init;
+	t_init				*init;
 
 }	t_philo;
 

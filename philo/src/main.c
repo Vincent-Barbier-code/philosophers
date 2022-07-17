@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:59:31 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/16 20:21:06 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/17 22:49:03 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,26 @@ void	*routine(void *a)
 {
 	t_philo *philo;
 
-	// usleep(100);
 	philo = a;
-	action(philo);	
+	action(philo);
 	return (NULL);
 }
 
-t_philo *init_philo(t_philo *philo, t_init init, int i)
+t_philo *init_philo(t_philo *philo, t_init *init, int i)
 {
 	philo[i].ID = i + 1;
 	philo[i].state = -1;
 	philo[i].init = init;
-	philo[i].init.die = 0;
-	philo[i].time_to_die = get_time() + philo->init.time_to_die;
+	pthread_mutex_lock(&philo->init->m_die);
+	philo[i].init->die = 0;
+	pthread_mutex_unlock(&philo->init->m_die);
+	philo[i].time_to_die = get_time() + philo->init->time_to_die;
 	philo[i].lfork = i;
-	if (i == philo->init.nb_philo - 1)
+	if (i == philo->init->nb_philo - 1)
 		philo[i].rfork = 0;
 	else
 		philo[i].rfork = i + 1;
-	philo[i].nb_must_eat = philo->init.nb_must_eat;
+	philo[i].nb_must_eat = philo->init->nb_must_eat;
 	return (philo);
 }
 
@@ -66,13 +67,13 @@ t_philo	*create_philo(t_philo *philo, t_init *init)
 	i = 0;
 	init->fork = init_fork(init);
 	init->time = get_time();
-	pthread_mutex_init(&init->read, NULL);
-	pthread_mutex_init(&init->pense, NULL);
+	pthread_mutex_init(&init->m_read, NULL);
 	pthread_mutex_init(&init->m_die, NULL);
 	pthread_mutex_init(&init->m_nb_eat, NULL);
+	pthread_mutex_init(&init->m_state, NULL);	
 	while(i < init->nb_philo)
 	{
-		philo = init_philo(philo, *init, i);
+		philo = init_philo(philo, init, i);
 		ret = pthread_create(&philo[i].thread, NULL, &routine, &philo[i]);
 		if (ret)
 		{
@@ -101,7 +102,7 @@ int	main(int ac, char **av)
 	if (join_monitor(philo))
 		return (EXIT_FAILURE);
 	destroy_fork(&init);
-	free(philo->init.fork);
+	free(philo->init->fork);
 	free(philo);
 
 	ft_printf("%d ", init.nb_philo);

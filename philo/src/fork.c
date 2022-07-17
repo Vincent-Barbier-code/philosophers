@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 23:20:06 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/16 18:03:02 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/17 22:23:24 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ pthread_mutex_t	*init_fork(t_init *init)
 	int ret;
 
 	fork = malloc(init->nb_philo * sizeof(pthread_mutex_t));
+	if (!fork)
+		return (NULL);
 	i = 0;
 	while (i < init->nb_philo)
 	{
