@@ -6,16 +6,16 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:54:09 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/07 14:28:21 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/18 01:43:08 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static void	error()
+static void	*error(void)
 {
 	ft_putstr_fd("Error : Mauvais arguments \n", 2);
-	exit(EXIT_FAILURE);	
+	return (NULL);
 }
 
 static int	ft_atoi(char *str)
@@ -43,13 +43,13 @@ static int	ft_atoi(char *str)
 	return (nb);
 }
 
-static void	verif_nb(int ac, char **av)
+static int	verif_nb(int ac, char **av)
 {
 	int	x;
-	int y;
+	int	y;
 
 	x = 0;
-	y = 1;		
+	y = 1;
 	while (y < ac)
 	{
 		x = 0;
@@ -61,14 +61,17 @@ static void	verif_nb(int ac, char **av)
 		}
 		y++;
 	}
+	return (1);
 }
 
-void	parsing(int ac, char **av, t_init *init)
+int	parsing(int ac, char **av, t_init *init)
 {
 	init->nb_must_eat = 0;
 	if (ac > 6 || ac < 5)
-		error();
-	verif_nb(ac, av);
+		if (!error())
+			return (0);
+	if (!verif_nb(ac, av))
+		return (0);
 	init->nb_philo = ft_atoi(av[1]);
 	init->time_to_die = ft_atoi(av[2]);
 	init->time_to_eat = ft_atoi(av[3]);
@@ -77,4 +80,5 @@ void	parsing(int ac, char **av, t_init *init)
 		init->nb_must_eat = ft_atoi(av[5]);
 	else
 		init->nb_must_eat = -1;
+	return (1);
 }

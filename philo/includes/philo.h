@@ -6,12 +6,12 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:55:58 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/17 22:38:16 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/18 02:08:45 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef PHILO_H
+# define PHILO_H
 
 # include <pthread.h>
 # include <limits.h>
@@ -44,7 +44,7 @@ typedef struct s_init
 
 typedef struct s_philo
 {
-	int					ID;
+	int					id;
 	int					state;
 	int					rfork;
 	int					lfork;
@@ -58,19 +58,26 @@ typedef struct s_philo
 }	t_philo;
 
 //parsing.c
-void	parsing(int ac, char **av, t_init *init);
+int					parsing(int ac, char **av, t_init *init);
 
 //fork.c
-pthread_mutex_t	*init_fork(t_init *init);
-void	destroy_fork(t_init *init);
+pthread_mutex_t		*init_fork(t_init *init);
+void				destroy_fork(t_init *init);
 unsigned long int	get_time(void);
+void				free_all(t_philo *philo);
 
 //action.c
-void	*action(t_philo *philo);
+void				*action(t_philo *philo);
 
 //monitoring.c 
-t_philo	*create_monitor(t_philo *philo);
-int	join_monitor(t_philo *philo);
+t_philo				*create_monitor(t_philo *philo);
+int					join_monitor(t_philo *philo);
 
+//condition.c
+int					die(t_philo *philo);
+int					init_impair(t_philo *philo);
+int					init_pair(t_philo *philo);
+int					can_eat(t_philo *philo);
+int					can_sleep(t_philo *philo);
 
 #endif

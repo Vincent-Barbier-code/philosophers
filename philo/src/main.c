@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:59:31 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/17 22:49:03 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/18 02:06:39 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ int	join_philo(t_philo *philo, t_init *init)
 
 void	*routine(void *a)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = a;
 	action(philo);
 	return (NULL);
 }
 
-t_philo *init_philo(t_philo *philo, t_init *init, int i)
+t_philo	*init_philo(t_philo *philo, t_init *init, int i)
 {
-	philo[i].ID = i + 1;
+	philo[i].id = i + 1;
 	philo[i].state = -1;
 	philo[i].init = init;
 	pthread_mutex_lock(&philo->init->m_die);
@@ -70,20 +70,19 @@ t_philo	*create_philo(t_philo *philo, t_init *init)
 	pthread_mutex_init(&init->m_read, NULL);
 	pthread_mutex_init(&init->m_die, NULL);
 	pthread_mutex_init(&init->m_nb_eat, NULL);
-	pthread_mutex_init(&init->m_state, NULL);	
-	while(i < init->nb_philo)
+	pthread_mutex_init(&init->m_state, NULL);
+	while (i < init->nb_philo)
 	{
 		philo = init_philo(philo, init, i);
 		ret = pthread_create(&philo[i].thread, NULL, &routine, &philo[i]);
 		if (ret)
 		{
 			ft_printf("Probleme crea thread");
-			exit(0);
-			//return (i);
+			free_all(philo);
+			return (NULL);
 		}
 		i++;
 	}
-	philo = create_monitor(philo);
 	return (philo);
 }
 
@@ -92,26 +91,20 @@ int	main(int ac, char **av)
 	t_philo				*philo;
 	t_init				init;
 
-	parsing(ac, av, &init);
+	if (!parsing(ac, av, &init))
+		return (EXIT_FAILURE);
 	philo = NULL;
 	philo = create_philo(philo, &init);
-	
-	 // free le tab
+	if (!philo)
+		return (EXIT_FAILURE);
+	philo = create_monitor(philo);
+	if (!philo)
+		return (EXIT_FAILURE);
 	if (join_philo(philo, &init))
-		return (EXIT_FAILURE); // free le tab
+		return (EXIT_FAILURE);
 	if (join_monitor(philo))
 		return (EXIT_FAILURE);
-	destroy_fork(&init);
-	free(philo->init->fork);
-	free(philo);
-
-	ft_printf("%d ", init.nb_philo);
-	ft_printf("%d ", init.time_to_die);
-	ft_printf("%d ", init.time_to_eat);
-	ft_printf("%d ", init.time_to_sleep);
-	if (init.nb_must_eat != 0)
-		ft_printf("%d ", init.nb_must_eat);	
-	
-	ft_printf("\n--------------------------FIN-------------------------");
-	return(EXIT_SUCCESS);
+	free_all(philo);
+	ft_printf("\n--------------------------END-------------------------");
+	return (EXIT_SUCCESS);
 }

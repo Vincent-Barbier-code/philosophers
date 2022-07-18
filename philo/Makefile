@@ -6,7 +6,7 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 FT_PRINTF =  -L ./ft_printf -lftprintf
 
-SRC_FILES = $(addprefix $(SRC_DIR), main.c parsing.c fork.c action.c monitoring.c)
+SRC_FILES = $(addprefix $(SRC_DIR), main.c parsing.c fork.c action.c monitoring.c condition.c)
 OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
