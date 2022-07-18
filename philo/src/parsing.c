@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:54:09 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/18 01:43:08 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/18 18:26:31 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	parsing(int ac, char **av, t_init *init)
 	if (!verif_nb(ac, av))
 		return (0);
 	init->nb_philo = ft_atoi(av[1]);
+	if (init->nb_philo == 0)
+		return (0);
 	init->time_to_die = ft_atoi(av[2]);
 	init->time_to_eat = ft_atoi(av[3]);
 	init->time_to_sleep = ft_atoi(av[4]);
