@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 01:07:32 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/18 02:06:39 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/18 02:12:31 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	join_monitor(t_philo *philo)
 	ret = pthread_join(philo->init->monitor_time_die, NULL);
 	if (ret)
 	{
+		free_all(philo);
 		ft_printf("Probleme join thread");
 		return (1);
 	}
