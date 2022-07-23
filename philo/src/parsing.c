@@ -6,16 +6,16 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:54:09 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/18 18:26:31 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/23 23:32:22 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static void	*error(void)
+static int	error(void)
 {
 	ft_putstr_fd("Error : Mauvais arguments \n", 2);
-	return (NULL);
+	return (0);
 }
 
 static int	ft_atoi(char *str)
@@ -56,7 +56,7 @@ static int	verif_nb(int ac, char **av)
 		while (av[y][x])
 		{
 			if (av[y][x] < '0' || av[y][x] > '9')
-				error();
+				return (error());
 			x++;
 		}
 		y++;
